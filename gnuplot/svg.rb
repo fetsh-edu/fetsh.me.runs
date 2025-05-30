@@ -95,7 +95,7 @@ module Gnuplot
       end
 
       # Russian month abbreviations, indexed 0–11 for Jan–Dec
-      MONTH_NAMES = %w[янв фев мар апр май июн июл авг сен окт ноя дек].freeze
+      MONTH_NAMES = %w[янв фев мар апр май июнь июль авг сен окт ноя дек].freeze
 
       # Build an array of Date objects for the first day of each month
       # from start_date up to end_date.

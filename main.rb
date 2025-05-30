@@ -10,7 +10,7 @@ require_relative 'renderer/renderer'
 
 OUT_HTML = ENV.fetch('RUN_HTML', './out/index.html')
 
-# Strava::ActivitiesLoader.load_and_save!
+Strava::ActivitiesLoader.load_and_save!
 runs = MultiJson.load(File.read(Strava::ActivitiesLoader::RUN_FILE))
 stats = Calculator.weekly_stats(runs, 52)
 svg = Gnuplot::Svg.generate(
