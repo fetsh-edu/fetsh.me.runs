@@ -7,26 +7,16 @@
           <div class="w-<%= cls %>"><%= txt %></div>
         <% end %>
       </div>
-      <% dates[year].values.each_with_index do |week, idx| %>
-        <% cls = idx.zero? ? 'week first-week' : 'week' %>
-        <div class="<%= cls %>">
-          <% week.each do |iso, runs_for_day| %>
-            <% total = runs_for_day.sum { |r| r['distance'].to_f } %>
-            <% per   = percentage(1600, 41000, total) / 100.0 %>
-            <% rgb   = pick_color(color_from, color_to, per).join(',') %>
-            <% km    = (total / 1000.0).round(2) %>
-            <% grade = distance_to_grade(total) %>
-            <% date_str = Date.parse(iso).strftime('%d %B') %>
-            <% title = km.positive? ? "#{km} км on #{date_str}" : "No data on #{date_str}" %>
-
-            <div class="date <%= grade %>"
-                 data-distance="<%= total %>"
-                 style="background-color: rgb(<%= rgb %>)">
-              <p class="tooltip"><%= CGI.escape_html(title) %></p>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+      <% dates[year].values.each_with_index do |week, idx| -%>
+      <div class="<%= idx.zero? ? 'week first-week' : 'week' %>"><% week.each do |iso, runs_for_day|
+        total     = runs_for_day.sum { |r| r['distance'].to_f }
+        per       = percentage(1600, 41000, total) / 100.0
+        rgb       = pick_color(color_from, color_to, per).join(',')
+        km        = (total / 1000.0).round(2)
+        grade     = distance_to_grade(total)
+        date_str  = Date.parse(iso).strftime('%d %B')
+        title     = km.positive? ? "#{km} км on #{date_str}" : "No data on #{date_str}"
+      -%><div class="date <%= grade %>" data-distance="<%= total %>" style="background-color: rgb(<%= rgb %>)"><p class="tooltip"><%= CGI.escape_html(title) %></p></div><% end -%></div><% end -%>
     </div>
   </div>
 <% end %>
