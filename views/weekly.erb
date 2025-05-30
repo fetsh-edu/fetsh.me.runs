@@ -1,0 +1,14 @@
+<article id="weekly">
+  <h2 id="weekly-heading">Недельная статистика</h2>
+
+  <div id="myDailyChart">
+      <div id="chartsvg">
+          <%= svg %>
+      </div>
+      <div id="stats">
+          За эту неделю: <strong><%= current_week_km %> км</strong><br>
+          Сред. неделя: <strong><%= avg.round(1) %> км</strong><br>
+          Макс. неделя: <strong><%= maximum %> км</strong> (<%= max_week_label %>)
+      </div>
+  </div>
+</article>

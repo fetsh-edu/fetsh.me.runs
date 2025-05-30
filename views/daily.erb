@@ -1,0 +1,47 @@
+<article id="daily">
+  <h2 id="daily-heading">Ежедневная статистика</h2>
+  <div id="myHeatMap" class="<%= map_mode %>">
+    <div class="controls">
+      <a href="#binary" id="control-binary">Бинарно</a>
+      <a href="#linear" id="control-linear" class="active">Линейно</a>
+      <a href="#graded" id="control-graded">Категорично</a>
+    </div>
+    <div id="heat-map-years">
+      <%= heatmap_html %>
+    </div>
+  </div>
+  <script>
+    const drawControls = (myMap) => {
+        const binaryButton = document.getElementById("control-binary");
+        const linearButton = document.getElementById("control-linear");
+        const gradedButton = document.getElementById("control-graded");
+
+        binaryButton.addEventListener("click", (e) => {
+            myMap.classList.remove("linear");
+            myMap.classList.remove("graded");
+            myMap.classList.add("binary");
+            linearButton.classList.remove("active");
+            gradedButton.classList.remove("active");
+            e.currentTarget.classList.add("active");
+        });
+        linearButton.addEventListener("click", (e) => {
+            myMap.classList.remove("binary");
+            myMap.classList.remove("graded");
+            myMap.classList.add("linear");
+            binaryButton.classList.remove("active");
+            gradedButton.classList.remove("active");
+            e.currentTarget.classList.add("active");
+        });
+        gradedButton.addEventListener("click", (e) => {
+            myMap.classList.remove("binary");
+            myMap.classList.remove("linear");
+            myMap.classList.add("graded");
+            binaryButton.classList.remove("active");
+            linearButton.classList.remove("active");
+            e.currentTarget.classList.add("active");
+        });
+    };
+    const myMap = document.getElementById("myHeatMap");
+    drawControls(myMap);
+  </script>
+</article>
