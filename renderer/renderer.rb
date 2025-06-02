@@ -3,11 +3,13 @@
 require 'erb'
 require 'cgi'
 require_relative '../helpers/heatmap_helper'
+require_relative '../helpers/results_helper'
 
 module Renderer
   # Context for ERB rendering: holds locals and includes helper methods.
   class Context
     include HeatmapHelper
+    include ResultsHelper
 
     # @param locals [Hash] variables to expose in templates
     def initialize(locals)
@@ -20,6 +22,10 @@ module Renderer
     # Binding for ERB
     def get_binding
       binding
+    end
+
+    def render(name, locals = {})
+      Renderer.render_template(name, locals)
     end
   end
 

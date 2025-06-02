@@ -3,7 +3,7 @@
     <p class="header"><%= year %></p>
     <div>
       <div class="week-labels">
-        <% %w[pn vt sr ch pt sb vs].zip(['Пн','','Ср','','Пт','','Вс']).each do |cls, txt| %>
+        <% %w[pn vt sr ch pt sb vs].zip(['Пн','','Ср','','Пт','','Вс']).each do |cls, txt| -%>
           <div class="w-<%= cls %>"><%= txt %></div>
         <% end %>
       </div>

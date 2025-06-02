@@ -1,0 +1,53 @@
+<article id="results">
+  <h2 id="results-heading" class="section-header">Соревнования</h2>
+  <div class="section-container">
+    <div class="years-wrapper">
+        <% recent_three.each do |yr| -%><%= render :results_year, year: yr, results: results[yr], visible: true %><% end -%>
+        <% older_years.each do |yr| -%><%= render :results_year, year: yr, results: results[yr], visible: false %><% end -%>
+    </div>
+    <% if older_years.any? -%><div class="controls"><button type="button" class="pseudo show-more-btn">Показать больше</button></div><% end -%>
+  </div>
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                  // “Показать больше” button: show hidden year columns
+                  const showMoreBtn = document.querySelector('.show-more-btn');
+                  if (showMoreBtn) {
+                    showMoreBtn.addEventListener('click', () => {
+                      document.querySelectorAll('.year-column.hidden')
+                        .forEach(col => {
+                          col.classList.remove('hidden');
+                          col.classList.add('visible');
+                        });
+                      showMoreBtn.style.display = 'none';
+                    });
+                  }
+
+                  // Popup open: click on .competition-row
+                  document.querySelectorAll('.competition-row').forEach(row => {
+                    row.addEventListener('click', () => {
+                      const pid = row.getAttribute('data-popup-id');
+                      const popup = document.getElementById(pid);
+                      if (popup) popup.style.display = 'block';
+                    });
+                  });
+
+                  // Popup close: click on .popup-close
+                  document.querySelectorAll('.popup-close').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                      const pid = btn.getAttribute('data-popup-id');
+                      const popup = document.getElementById(pid);
+                      if (popup) popup.style.display = 'none';
+                    });
+                  });
+
+                  document.querySelectorAll('.popup').forEach(popup => {
+                    const backdrop = popup.querySelector('.popup-backdrop');
+
+                    // Если кликнули по самому backdrop, скрываем весь popup
+                    backdrop.addEventListener('click', () => {
+                      popup.style.display = 'none';
+                    });
+                  });
+                });
+              </script>
+</article>

@@ -7,6 +7,7 @@ require_relative 'strava/activities_loader'
 require_relative 'calculator/calculator'
 require_relative 'gnuplot/svg'
 require_relative 'renderer/renderer'
+require_relative 'results/reader'
 
 OUT_HTML = ENV.fetch('RUN_HTML', './out/index.html')
 
@@ -66,6 +67,17 @@ daily_html = Renderer.render_template(
   }
 )
 
+results = Reader.read('./results')
+all_years    = results.keys.sort.reverse
+
+results_html = Renderer.render_template(
+  :results,
+  {
+    results: results,
+    recent_three: all_years.first(3),
+    older_years: all_years.drop(3)
+  }
+)
 File.write(
   OUT_HTML,
   Renderer.render_template(
@@ -73,7 +85,7 @@ File.write(
     {
       title: 'Run!',
       css_path: "./css/main.css?v=#{Time.now.strftime('%Y%m%d%H%M%S')}",
-      content: weekly_html + daily_html
+      content: weekly_html + results_html + daily_html
     }
   )
 )
