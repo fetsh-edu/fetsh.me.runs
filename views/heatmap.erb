@@ -15,8 +15,8 @@
         km        = (total / 1000.0).round(2)
         grade     = distance_to_grade(total)
         date_str  = Date.parse(iso).strftime('%d %B')
-        title     = km.positive? ? "#{km} км on #{date_str}" : "No data on #{date_str}"
-      -%><div class="date <%= grade %>" data-distance="<%= total %>" style="background-color: rgb(<%= rgb %>)"><p class="tooltip"><%= CGI.escape_html(title) %></p></div><% end -%></div><% end -%>
+        km_       = km.positive? ? "#{km} км" : "No data"
+      -%><div class="date <%= grade %>" data-distance="<%= total %>" style="background-color: rgb(<%= rgb %>)"><p class="tooltip"><%= km_ %><br><span class="date-title"><%= date_str %></span></p></div><% end -%></div><% end -%>
     </div>
   </div>
 <% end %>
