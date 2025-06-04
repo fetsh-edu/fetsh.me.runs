@@ -10,59 +10,57 @@
                eid   = "#{year}-#{result[:id]}"
                date_str     = result[:data]['Дата']
                place        = result[:data]['Место']      # «64 / 481»
+               percentile   = percentile(place)
                category     = result[:data]['Категория']  # «11 / 89»
                strava_link  = result[:data]['Strava']     # «https://…»
                results_link = result[:data]['Results']    # «https://…»
             -%>
-            <div class="competition-row" data-popup-id="popup-<%= eid %>">
-                <%= distance_icon(dist) %><span class="time"><%= time %></span><span class="title"><%= title %></span>
-            </div>
-            <div class="popup" id="popup-<%= eid %>" style="display: none;">
-              <div class="popup-backdrop"></div>
-              <div class="popup-card">
-                <button class="popup-close" data-popup-id="popup-<%= eid %>">&times;</button>
-
-                <!-- Название соревнования -->
-                <h3 class="event-name"><%= title %></h3>
-
-                <!-- Основные параметры: двухколоночная сетка -->
-                <div class="event-details">
-                  <div class="detail-row">
-                    <span class="label">Дата</span>
-                    <span class="value"><%=  date_str %></span>
-                  </div>
-                  <div class="detail-row">
-                    <span class="label">Дистанция</span>
-                    <span class="value"><%= dist %></span>
-                  </div>
-                  <div class="detail-row">
-                    <span class="label">Время</span>
-                    <span class="value"><%= time %></span>
-                  </div>
-                  <div class="detail-row">
-                    <span class="label">Темп</span>
-                    <span class="value"><%= pace %></span>
-                  </div>
-                  <div class="detail-row">
-                    <span class="label">Место</span>
-                    <span class="value"><%= place %></span>
-                  </div>
-                  <div class="detail-row">
-                    <span class="label">Категория</span>
-                    <span class="value"><%= category %></span>
-                  </div>
+            <div class="competition-row-container">
+                <div class="competition-row" data-popup-id="popup-<%= eid %>">
+                    <%= distance_icon(dist) %><span class="time"><%= time %></span><span class="title"><%= title %></span>
                 </div>
-
-                <!-- Ссылки: две кнопки/ссылки -->
-                <div class="event-links">
-                  <% if strava_link && !strava_link.empty? %>
-                    <a href="<%= strava_link %>" class="link-button" target="_blank" rel="noopener">Strava</a>
-                  <% end %>
-                  <% if results_link && !results_link.empty? %>
-                    <a href="<%= results_link %>" class="link-button" target="_blank" rel="noopener">Results</a>
-                  <% end %>
+                <div class="popup" id="popup-<%= eid %>" style="display: none;">
+                    <div class="popup-card">
+                        <div class="competition-row popup-close-row">
+                            <%= distance_icon(dist) %><span class="time"><%= time %></span><span class="title"><%= title %></span>
+                        </div>
+                    <!-- Основные параметры: двухколоночная сетка -->
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <span class="label">Дата</span>
+                                <% if strava_link && !strava_link.empty? %>
+                                    <a href="<%= strava_link %>" class="strava-link" target="_blank" rel="noopener"><%= date_str %></a>
+                                <% else %>
+                                    <span class="value"><%= date_str %></span>
+                                <% end %>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Темп</span>
+                                <span class="value"><%= pace %></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Место</span>
+                                <% if results_link && !results_link.empty? %>
+                                    <a href="<%= results_link %>" class="results-link" target="_blank" rel="noopener"><%= place %></a>
+                                <% else %>
+                                    <span class="value"><%= place %></span>
+                                <% end %>
+                            </div>
+                            <% unless percentile.nil? -%>
+                                <div class="detail-row">
+                                    <span class="label">Перцентиль</span>
+                                    <span class="value"><%= percentile %></span>
+                                </div>
+                            <% end -%>
+                            <% unless category.nil? || category.empty? -%>
+                                <div class="detail-row">
+                                    <span class="label">Категория</span>
+                                    <span class="value"><%= category %></span>
+                                </div>
+                            <% end -%>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
         <% end -%>
     </div>

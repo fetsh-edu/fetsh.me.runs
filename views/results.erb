@@ -22,30 +22,36 @@
                     });
                   }
 
-                  // Popup open: click on .competition-row
-                  document.querySelectorAll('.competition-row').forEach(row => {
-                    row.addEventListener('click', () => {
-                      const pid = row.getAttribute('data-popup-id');
+                  // Открываем попап
+                  document.querySelectorAll('.competition-row[data-popup-id]').forEach(trigger => {
+                    trigger.addEventListener('click', () => {
+                      const pid   = trigger.getAttribute('data-popup-id');
                       const popup = document.getElementById(pid);
-                      if (popup) popup.style.display = 'block';
+                      if (!popup) return;
+
+                      popup.style.display = 'block';
+
+                      // Обработчик клика вне попапа
+                      const onDocClick = e => {
+                        if (!popup.contains(e.target) && !trigger.contains(e.target)) {
+                          popup.style.display = 'none';
+                          document.removeEventListener('click', onDocClick);
+                        }
+                      };
+
+                      // Навешиваем слушатель в следующем тикe, чтобы первый клик не закрыл попап сразу
+                      setTimeout(() => {
+                        document.addEventListener('click', onDocClick);
+                      }, 0);
                     });
                   });
 
-                  // Popup close: click on .popup-close
-                  document.querySelectorAll('.popup-close').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                      const pid = btn.getAttribute('data-popup-id');
-                      const popup = document.getElementById(pid);
+                  // Закрытие попапа при клике по внутреннему заголовку (.competition-row внутри .popup-card)
+                  document.querySelectorAll('.popup .competition-row').forEach(innerRow => {
+                    innerRow.addEventListener('click', e => {
+                      e.stopPropagation();
+                      const popup = innerRow.closest('.popup');
                       if (popup) popup.style.display = 'none';
-                    });
-                  });
-
-                  document.querySelectorAll('.popup').forEach(popup => {
-                    const backdrop = popup.querySelector('.popup-backdrop');
-
-                    // Если кликнули по самому backdrop, скрываем весь popup
-                    backdrop.addEventListener('click', () => {
-                      popup.style.display = 'none';
                     });
                   });
                 });
