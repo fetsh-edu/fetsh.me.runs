@@ -156,7 +156,7 @@ module Gnuplot
       #
       def points_svg
         labels.each_with_index.map do |label, i|
-          point_svg(px: px(i), py: py(i), title: "#{values[i].round(1)} км (#{label})")
+          point_svg(px: px(i), py: py(i), title: "#{values[i].round(1)} км<br>#{Date.parse(label).strftime('%d %B')}")
         end.join("\n")
       end
 
@@ -180,7 +180,7 @@ module Gnuplot
             <circle r="6" class="chart-circle">
               <title>#{title}</title>
             </circle>
-            <text y="-20" class="chart-tooltip">#{title}</text>
+            <foreignObject y="-20" class="chart-tooltip"><span class="svg-tooltip">#{title}</span></foreignObject>
           </g>
         SVG
       end
