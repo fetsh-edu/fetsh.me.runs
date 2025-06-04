@@ -156,7 +156,7 @@ module Gnuplot
       #
       def points_svg
         labels.each_with_index.map do |label, i|
-          point_svg(px: px(i), py: py(i), title: "#{values[i].round(1)} км<br>#{Date.parse(label).strftime('%d %B')}")
+          point_svg(px: px(i), py: py(i), title: "#{values[i].round(1)} км <br>#{Date.parse(label).strftime('%d %B')}")
         end.join("\n")
       end
 
